@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ house.name }} - Dream House Realty{% endblock %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 0 auto;">
+    <!-- Back Button -->
+    <a href="{{ url_for('home') }}" style="display: inline-flex; align-items: center; color: #3498db; text-decoration: none; margin-bottom: 2rem;">
+        ← Back to Listings
+    </a>
+
+    <!-- House Details -->
+    <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <img src="{{ house.image_url }}" alt="{{ house.name }}" style="width: 100%; height: 400px; object-fit: cover;">
+        
+        <div style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1 style="color: #2c3e50; margin-bottom: 0.5rem;">{{ house.name }}</h1>
+                    <p style="color: #7f8c8d; font-size: 1.2rem;">📍 {{ house.location }}</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="color: #e74c3c; font-size: 2rem; font-weight: bold;">${{ "{:,}".format(house.price) }}</p>
+                </div>
+            </div>
+
+            <!-- Property Features -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem;">🛏️</div>
+                    <div style="font-weight: bold; color: #2c3e50;">{{ house.bedrooms }} Bedrooms</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem;">🛁</div>
+                    <div style="font-weight: bold; color: #2c3e50;">{{ house.bathrooms }} Bathrooms</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem;">🏠</div>
+                    <div style="font-weight: bold; color: #2c3e50;">House</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.5rem;">💰</div>
+                    <div style="font-weight: bold; color: #2c3e50;">For Sale</div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div style="margin-bottom: 2rem;">
+                <h2 style="color: #2c3e50; margin-bottom: 1rem;">Property Description</h2>
+                <p style="color: #555; line-height: 1.8; font-size: 1.1rem; white-space: pre-line;">{{ house.description }}</p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="{{ url_for('contact') }}?house_id={{ house.id }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    📧 Inquire About This Property
+                </a>
+                <a href="{{ url_for('home') }}" class="btn" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    🔍 View Other Properties
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+        <h2 style="margin-bottom: 1rem;">Interested in this property?</h2>
+        <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">Schedule a viewing or get more information today!</p>
+        <a href="{{ url_for('contact') }}?house_id={{ house.id }}" class="btn" style="background: white; color: #667eea; font-size: 1.1rem; padding: 1rem 2rem;">
+            Contact Us Now
+        </a>
+    </div>
+</div>
+{% endblock %}

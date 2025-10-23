@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Dream House Realty - Find Your Perfect Home{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 3rem;">
+    <h1 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 1rem;">Find Your Dream Home</h1>
+    <p style="font-size: 1.2rem; color: #7f8c8d;">Discover our exclusive collection of premium properties</p>
+</div>
+
+{% if houses %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+        {% for house in houses %}
+        <div style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s;">
+            <img src="{{ house.image_url }}" alt="{{ house.name }}" style="width: 100%; height: 250px; object-fit: cover;">
+            
+            <div style="padding: 1.5rem;">
+                <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">{{ house.name }}</h3>
+                <p style="color: #e74c3c; font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">${{ "{:,}".format(house.price) }}</p>
+                <p style="color: #7f8c8d; margin-bottom: 1rem;">
+                    🛏️ {{ house.bedrooms }} Bedrooms • 🛁 {{ house.bathrooms }} Bathrooms
+                </p>
+                <p style="color: #34495e; margin-bottom: 1rem;">📍 {{ house.location }}</p>
+                <p style="color: #666; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    {{ house.description }}
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="{{ url_for('house_detail', id=house.id) }}" class="btn">View Details</a>
+                    <a href="{{ url_for('contact') }}?house_id={{ house.id }}" class="btn btn-primary">Inquire</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="text-align: center; padding: 3rem;">
+        <h2 style="color: #7f8c8d;">No properties available at the moment</h2>
+        <p>Please check back later for new listings.</p>
+    </div>
+{% endif %}
+
+<div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <h2 style="color: #2c3e50; margin-bottom: 1rem;">Ready to Find Your Dream Home?</h2>
+    <p style="margin-bottom: 1.5rem;">Contact us today for personalized service and expert guidance.</p>
+    <a href="{{ url_for('contact') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Get Started</a>
+</div>
+{% endblock %}

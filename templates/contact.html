@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - Dream House Realty{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 1rem;">Contact Us</h1>
+        <p style="font-size: 1.2rem; color: #7f8c8d;">Get in touch with our expert team</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+        <!-- Contact Form -->
+        <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <h2 style="color: #2c3e50; margin-bottom: 1.5rem;">Send us a Message</h2>
+            
+            <form method="POST" id="inquiryForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Name Field -->
+                <div>
+                    <label for="name" style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Full Name *
+                    </label>
+                    <input type="text" id="name" name="name" required 
+                           style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s;"
+                           placeholder="Enter your full name"
+                           value="{{ request.form.name if request.form }}">
+                </div>
+
+                <!-- Email Field -->
+                <div>
+                    <label for="email" style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Email Address *
+                    </label>
+                    <input type="email" id="email" name="email" required 
+                           style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s;"
+                           placeholder="Enter your email address"
+                           value="{{ request.form.email if request.form }}">
+                </div>
+
+                <!-- Phone Field (New) -->
+                <div>
+                    <label for="phone" style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Phone Number
+                    </label>
+                    <input type="tel" id="phone" name="phone" 
+                           style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 1rem; transition: border-color 0.3s;"
+                           placeholder="Enter your phone number (optional)"
+                           value="{{ request.form.phone if request.form }}">
+                </div>
+
+                <!-- Property Selection -->
+                <div>
+                    <label for="house_id" style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Interested in Property
+                    </label>
+                    <select id="house_id" name="house_id" 
+                            style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 1rem; background: white;">
+                        <option value="">Select a property (optional)</option>
+                        {% for house in houses %}
+                            <option value="{{ house.id }}" 
+                                    {% if request.args.get('house_id')|int == house.id or (request.form and request.form.house_id|int == house.id) %}selected{% endif %}>
+                                {{ house.name }} - ${{ "{:,}".format(house.price) }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Inquiry Type (New) -->
+                <div>
+                    <label for="inquiry_type" style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Type of Inquiry
+                    </label>
+                    <select id="inquiry_type" name="inquiry_type" 
+                            style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 1rem; background: white;">
+                        <option value="general">General Inquiry</option>
+                        <option value="viewing">Schedule Viewing</option>
+                        <option value="pricing">Price Information</option>
+                        <option value="mortgage">Mortgage Assistance</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Message Field -->
+                <div>
+                    <label for="message" style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Message *
+                    </label>
+                    <textarea id="message" name="message" required rows="6"
+                              style="width: 100%; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 1rem; resize: vertical; transition: border-color 0.3s;"
+                              placeholder="Tell us about your requirements, questions, or schedule a viewing...">{{ request.form.message if request.form }}</textarea>
+                </div>
+
+                <!-- Preferred Contact Method (New) -->
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; color: #2c3e50; font-weight: bold;">
+                        Preferred Contact Method
+                    </label>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="contact_method" value="email" checked>
+                            <span>Email</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="contact_method" value="phone">
+                            <span>Phone</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="contact_method" value="both">
+                            <span>Both</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem; margin-top: 1rem;">
+                    📨 Send Inquiry
+                </button>
+
+                <p style="color: #7f8c8d; font-size: 0.9rem; text-align: center;">
+                    * Required fields
+                </p>
+            </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div>
+            <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+                <h2 style="color: #2c3e50; margin-bottom: 1.5rem;">Get in Touch</h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 1.5rem;">📧</div>
+                        <div>
+                            <h3 style="color: #2c3e50; margin-bottom: 0.25rem;">Email Us</h3>
+                            <p style="color: #666;">info@dreamhouserealty.com</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 1.5rem;">📞</div>
+                        <div>
+                            <h3 style="color: #2c3e50; margin-bottom: 0.25rem;">Call Us</h3>
+                            <p style="color: #666;">+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 1.5rem;">🕒</div>
+                        <div>
+                            <h3 style="color: #2c3e50; margin-bottom: 0.25rem;">Business Hours</h3>
+                            <p style="color: #666;">Monday - Friday: 9AM - 6PM</p>
+                            <p style="color: #666;">Saturday: 10AM - 4PM</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: start; gap: 1rem;">
+                        <div style="font-size: 1.5rem;">🎯</div>
+                        <div>
+                            <h3 style="color: #2c3e50; margin-bottom: 0.25rem;">Our Service</h3>
+                            <p style="color: #666;">Property Sales & Purchases</p>
+                            <p style="color: #666;">Market Analysis</p>
+                            <p style="color: #666;">Professional Guidance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Response Info -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2rem; border-radius: 10px; text-align: center;">
+                <h3 style="margin-bottom: 1rem;">Quick Response Guaranteed</h3>
+                <p>We typically respond to all inquiries within 2 hours during business hours.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #3498db !important;
+    }
+    
+    .form-success {
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border-radius: 5px;
+        border: 1px solid #c3e6cb;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('inquiryForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function(e) {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        // Basic validation
+        if (!name || !email || !message) {
+            e.preventDefault();
+            alert('Please fill in all required fields (Name, Email, Message).');
+            return false;
+        }
+        
+        // Email validation
+        if (!isValidEmail(email)) {
+            e.preventDefault();
+            alert('Please enter a valid email address.');
+            return false;
+        }
+        
+        // Show loading state
+        submitBtn.innerHTML = '⏳ Sending...';
+        submitBtn.disabled = true;
+    });
+    
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+    
+    // Auto-select inquiry type based on house selection
+    const houseSelect = document.getElementById('house_id');
+    const inquiryTypeSelect = document.getElementById('inquiry_type');
+    
+    houseSelect.addEventListener('change', function() {
+        if (this.value) {
+            inquiryTypeSelect.value = 'viewing';
+        }
+    });
+});
+</script>
+{% endblock %}

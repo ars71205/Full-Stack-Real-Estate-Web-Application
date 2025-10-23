@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Dream House Realty{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+    <!-- Header Section -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 1rem;">{{ about.title }}</h1>
+        <div style="height: 4px; width: 100px; background: #3498db; margin: 0 auto;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div style="background: white; padding: 2.5rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+        <div style="margin-bottom: 2rem;">
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #555; text-align: justify;">
+                {{ about.content }}
+            </p>
+        </div>
+
+        {% if about.mission %}
+        <div style="padding: 2rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;">
+            <h2 style="color: #2c3e50; margin-bottom: 1rem;">Our Mission</h2>
+            <p style="font-style: italic; color: #666; line-height: 1.7;">{{ about.mission }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Why Choose Us -->
+    <div style="background: white; padding: 2.5rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+        <h2 style="color: #2c3e50; margin-bottom: 1.5rem; text-align: center;">Why Choose Dream House Realty?</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+                <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Expert Guidance</h3>
+                <p style="color: #666;">15+ years of real estate experience with proven results</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Personalized Service</h3>
+                <p style="color: #666;">Tailored solutions to match your unique needs and preferences</p>
+            </div>
+            
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">💼</div>
+                <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">Full Support</h3>
+                <p style="color: #666;">Comprehensive assistance from search to closing and beyond</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div style="background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 2.5rem; border-radius: 10px; text-align: center;">
+        <h2 style="margin-bottom: 1rem;">Get in Touch</h2>
+        <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">Ready to start your journey to finding the perfect home?</p>
+        <div style="margin-bottom: 2rem;">
+            <p style="font-size: 1.2rem;">📧 {{ about.contact_email }}</p>
+        </div>
+        <a href="{{ url_for('contact') }}" class="btn" style="background: white; color: #2c3e50; font-size: 1.1rem; padding: 1rem 2rem;">
+            Contact Us Today
+        </a>
+    </div>
+</div>
+{% endblock %}
